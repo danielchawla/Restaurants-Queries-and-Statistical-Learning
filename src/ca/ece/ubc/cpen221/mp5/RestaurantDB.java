@@ -26,7 +26,7 @@ public class RestaurantDB {
 	 *            the filename for the users
 	 */
 	public RestaurantDB(String restaurantJSONfilename, String reviewsJSONfilename, String usersJSONfilename) {
-		// TODO: Implement this method
+
 	}
 
 	public Set<Restaurant> query(String queryString) {

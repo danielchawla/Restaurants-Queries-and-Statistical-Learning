@@ -30,8 +30,7 @@ public class RestaurantDB {
 	}
 
 	public Set<Restaurant> query(String queryString) {
-		// TODO: Implement this method
-		// Write specs, etc.
+		
 		return null;
 	}
 

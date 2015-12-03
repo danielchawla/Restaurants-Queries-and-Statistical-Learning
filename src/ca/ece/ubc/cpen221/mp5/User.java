@@ -1,7 +1,64 @@
 package ca.ece.ubc.cpen221.mp5;
 
-// TODO: Use this class to represent a Yelp user.
+import java.util.*;
 
 public class User {
-
+	private final Map<String, Integer> votes;
+	private int review_count;
+	private final String user_id;
+	private final String name;
+	private double average_stars;
+	
+	public User(int funnyVotes, int usefulVotes, int coolVotes, int review_count,
+			String user_id, String name, double average_stars){
+		
+		votes = new TreeMap<String, Integer>();
+		votes.put("funny", funnyVotes);
+		votes.put("useful", usefulVotes);
+		votes.put("cool", coolVotes);
+		this.review_count = review_count;
+		this.user_id = user_id;
+		this.name = name;
+		this.average_stars = average_stars;
+	}
+	
+	public Map<String, Integer> getVotes (){
+		return Collections.unmodifiableMap(votes);
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public int getReviewCount(){
+		return review_count;
+	}
+	
+	public double getAvgStars(){
+		return average_stars;
+	}
+	
+	public String getUserID (){
+		return user_id;
+	}
+	
+	public void addReview (int numOfStars){
+		long totalStars = Math.round(average_stars * review_count);
+		totalStars+=numOfStars;
+		review_count ++;
+		average_stars = ((double) totalStars) / review_count;
+	}
+	
+	@Override
+	public boolean equals(Object that){
+		if (!(that instanceof User)) return false;
+		User user = (User) that;
+		if(user.getUserID().equals(this.getUserID())) return true;
+		return false;
+	}
+	
+	@Override
+	public int hashCode(){
+		return user_id.hashCode();
+	}
 }

@@ -2,8 +2,6 @@ package ca.ece.ubc.cpen221.mp5;
 
 import java.util.*;
 
-// TODO: Use this class to represent a Yelp user.
-
 public class User {
 	private final Map<String, Integer> votes;
 	private int review_count;
@@ -28,8 +26,16 @@ public class User {
 		return Collections.unmodifiableMap(votes);
 	}
 	
-	public void addVote(String type){
-		//TODO: make this maybe
+	public String getName(){
+		return name;
+	}
+	
+	public int getReviewCount(){
+		return review_count;
+	}
+	
+	public double getAvgStars(){
+		return average_stars;
 	}
 	
 	public String getUserID (){
@@ -40,8 +46,7 @@ public class User {
 		long totalStars = Math.round(average_stars * review_count);
 		totalStars+=numOfStars;
 		review_count ++;
-		average_stars = ((double) totalStars) / reviewCount;
-		//TODO: finish this method
+		average_stars = ((double) totalStars) / review_count;
 	}
 	
 	@Override

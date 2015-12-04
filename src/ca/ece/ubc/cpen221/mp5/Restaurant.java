@@ -27,12 +27,10 @@ public class Restaurant {
     final static String REVIEWCOUNT = "review_count";
     final static String PRICE = "price";
     final static String PHOTO = "photo_url";
-    final static String SCHOOLS = "schools";
+	final static String SCHOOLS = "schools";
+	final private Location coordinates = new Location((Double) this.restaurant.get(LATITUDE),
+			(Double) this.restaurant.get(LONGITUDE));
 
-    private double[] coordinates = new double[2]; 
-    final static private int LONGITUTDE_INDEX = 0;
-    final static private int LATITUDE_INDEX = 1;
-    
     final private String city;
     final private String address;
     final private String state;
@@ -61,8 +59,6 @@ public class Restaurant {
         this.city = (String) this.restaurant.get(CITY);
         this.address = (String) this.restaurant.get(ADDRESS);
         this.state = (String) this.restaurant.get(STATE);
-        this.coordinates[LONGITUTDE_INDEX] = (Double) this.restaurant.get(LONGITUDE);
-        this.coordinates[LATITUDE_INDEX] = (Double) this.restaurant.get(LATITUDE);
         
         this.photo = (String) this.restaurant.get(PHOTO);
         this.type = (String) this.restaurant.get(TYPE);
@@ -118,8 +114,8 @@ public class Restaurant {
         return this.state;
     }
     
-    public double[] getLocation() {
-        return this.coordinates.clone();
+    public Location getLocation() {
+        return coordinates.clone();
     }
 
     public Set<String> getSurroundingNeighbourhoods() {

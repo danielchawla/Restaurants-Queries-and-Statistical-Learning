@@ -28,6 +28,12 @@ public class RestaurantDB {
 	public RestaurantDB(String restaurantJSONfilename, String reviewsJSONfilename, String usersJSONfilename) {
 
 	}
+	
+	public Set<Restaurant> getRestaurants(){
+		//TODO: change this
+		return null;
+		
+	}
 
 	public Set<Restaurant> query(String queryString) {
 		

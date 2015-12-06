@@ -5,7 +5,7 @@ import ca.ece.ubc.cpen221.mp5.*;
 
 public class Algorithms {
 	
-	private static final int NUMOFCYCLES = 30;
+	private static final int MAX_NUM_OF_CYCLES = 50;
 	
 	/**
 	 * Use k-means clustering to compute k clusters for the restaurants in the
@@ -37,8 +37,9 @@ public class Algorithms {
 			}
 		}
 		
-		for(int itter = 0; itter < NUMOFCYCLES; itter++){
+		for(int itter = 0; itter < MAX_NUM_OF_CYCLES; itter++){
 			//recreate centroids
+			boolean centroidsAreTheSame = true;
 			for(Set<Restaurant> cluster: clusters){
 				//set latitude & longitude Sets
 				Set<Double> lats = new HashSet<Double>();
@@ -50,9 +51,14 @@ public class Algorithms {
 				}
 				
 				int index = clusters.indexOf(cluster);
-				centroids.remove(index);
-				centroids.add(index, new Location(getAverage(lats), getAverage(longs)));
+				Location lastLoc = centroids.remove(index);
+				Location newLoc = new Location(getAverage(lats), getAverage(longs));
+				centroids.add(index, newLoc);
+				
+				if(!newLoc.isCloseTo(lastLoc)) centroidsAreTheSame = false;
 			}
+			
+			if(centroidsAreTheSame) break;
 			
 			//recreate clusters
 			clusters.clear();
@@ -76,14 +82,11 @@ public class Algorithms {
 	}
 	
 	private static double getAverage(Set<Double> inputs){
-		double average = 0;
-		int i = 0;
+		double sum = 0;
 		for(double num : inputs){
-			average*=i/(i+1);
-			average+=num/(i+1);
-			i++;
+			sum+=num;
 		}
-		return average;
+		return sum/inputs.size();
 	}
 	
 	private static Location getClosest(Location myLocation, List<Location> centroids){

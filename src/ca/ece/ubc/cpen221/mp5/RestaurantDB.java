@@ -15,6 +15,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import ca.ece.ubc.cpen221.mp5.queries.QueryGrammerParser;
+
 // TODO: This class represents the Restaurant Database.
 // Define the internal representation and 
 // state the rep invariant and the abstraction function.
@@ -270,7 +272,9 @@ public class RestaurantDB {
      * @return
      */
     public Set<Restaurant> query(String queryString) {
-      //TODO: implement this
+//        QueryGrammerParser queryParser = new QueryGrammerParser();
+        
         return null;
     }
 }
+

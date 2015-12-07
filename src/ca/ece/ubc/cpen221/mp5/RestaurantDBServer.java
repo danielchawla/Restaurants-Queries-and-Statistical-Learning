@@ -69,7 +69,7 @@ public class RestaurantDBServer {
 						+ " // Rating: " + restaurant.getStars());
 			}
 			output.println(restaurants);
-		}while(line != null);
+		} while(line != null);
 		input.close();
 		output.close();
 	}

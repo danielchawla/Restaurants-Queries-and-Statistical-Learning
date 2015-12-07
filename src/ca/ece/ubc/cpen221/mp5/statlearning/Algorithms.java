@@ -2,16 +2,17 @@ package ca.ece.ubc.cpen221.mp5.statlearning;
 
 import java.util.*;
 import ca.ece.ubc.cpen221.mp5.*;
+import org.json.simple.*;
 
 public class Algorithms {
 	
-	private static final int MAX_NUM_OF_CYCLES = 50;
+	private static final int MAX_NUM_OF_CYCLES = 100;
 	
 	/**
 	 * Use k-means clustering to compute k clusters for the restaurants in the
 	 * database.
 	 * 
-	 * @param db
+	 * @param db must contain at least k restaurants
 	 * @return
 	 */
 	public static List<Set<Restaurant>> kMeansClustering(int k, RestaurantDB db) {
@@ -36,6 +37,7 @@ public class Algorithms {
 				clusters.get(index).add(rest);
 			}
 		}
+		if(numOfCentroids != k) throw new IllegalArgumentException();
 		
 		for(int itter = 0; itter < MAX_NUM_OF_CYCLES; itter++){
 			//recreate centroids
@@ -55,10 +57,10 @@ public class Algorithms {
 				Location newLoc = new Location(getAverage(lats), getAverage(longs));
 				centroids.add(index, newLoc);
 				
-				if(!newLoc.isCloseTo(lastLoc)) centroidsAreTheSame = false;
+				if(!newLoc.equals(lastLoc)) centroidsAreTheSame = false;
 			}
 			
-			if(centroidsAreTheSame) break;
+			if(centroidsAreTheSame){ System.out.println("Number of itterations: " + itter); break;}
 			
 			//recreate clusters
 			clusters.clear();
@@ -107,9 +109,24 @@ public class Algorithms {
 		return closestLocation;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static String convertClustersToJSON(List<Set<Restaurant>> clusters) {
-		// TODO: Implement this method
-		return null;
+		JSONArray json_clusters = new JSONArray(); 
+		int clusterNumber = 0;
+		for (Set<Restaurant> set : clusters) {
+			JSONObject json_cluster = new JSONObject();
+			for (Restaurant rest : set) {
+				json_cluster.put("latitude", rest.getLocation().getLat());
+				json_cluster.put("longitude", rest.getLocation().getLong());
+				json_cluster.put("name", rest.getName());
+				json_cluster.put("cluster", clusterNumber);
+				clusterNumber++;
+				json_cluster.put("weight", 1);
+			}
+			json_clusters.add(json_cluster);
+		}
+
+		return json_clusters.toJSONString();
 	}
 
 	public static MP5Function getPredictor(User u, RestaurantDB db, MP5Function featureFunction) {

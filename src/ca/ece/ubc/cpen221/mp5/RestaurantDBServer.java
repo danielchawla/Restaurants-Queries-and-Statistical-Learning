@@ -4,6 +4,9 @@ package ca.ece.ubc.cpen221.mp5;
 // process queries concurrently, etc.
 
 public class RestaurantDBServer {
+    
+    private final int port;
+    private final RestaurantDB restaurantDatabase;
 
 	/**
 	 * Constructor
@@ -13,9 +16,12 @@ public class RestaurantDBServer {
 	 * @param filename2
 	 * @param filename3
 	 */
-	public RestaurantDBServer(int port, String filename1, String filename2, String filename3) {
+	public RestaurantDBServer(int port, String restaurants, String reviews, String users) {
 		// TODO: See the problem statement for what the arguments are.
 		// TODO: Rename the arguments suitably.
+	    restaurantDatabase = new RestaurantDB(restaurants, reviews, users);
+	    this.port = port;
+	            
 	}
 
 }

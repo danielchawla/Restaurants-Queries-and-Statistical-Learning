@@ -16,7 +16,6 @@ public class Review {
 	final static String USER_ID = "user_id";
 	final static String DATE = "date";
 	
-	final private String type;
 	final private String business_id;
 	final private Map<String, Integer> votes = new HashMap<String, Integer>();
 	final private String review_id;
@@ -27,7 +26,7 @@ public class Review {
 	final private JSONObject json_review;
 	
 	public Review(JSONObject o){
-		this.json_review = (JSONObject) o.clone();
+		json_review = (JSONObject) o.clone();
 		type = (String) json_review.get(TYPE);
 		business_id = (String) json_review.get(BUSINESS_ID);
 		JSONObject json_votes = (JSONObject) json_review.get(VOTES);
@@ -42,5 +41,44 @@ public class Review {
 		stars = (int) json_review.get(STARS);
 	}
 	
-	//TODO: Implement other methods!!
+	public String getBusinessID(){
+		return business_id;
+	}
+	
+	public Map<String, Integer> getVotes(){
+		return Collections.unmodifiableMap(votes);
+	}
+	
+	public String getReviewID(){
+		return review_id;
+	}
+	
+	public String getText(){
+		return text;
+	}
+	
+	public String getUserID(){
+		return user_id;
+	}
+	
+	public String getDate(){
+		return date;
+	}
+	
+	public int getStars(){
+		return stars;
+	}
+	
+	@Override
+	public boolean equals(Object that){
+		if (!(that instanceof Review)) return false;
+		Review review = (Review) that;
+		if(review.getReviewID().equals(this.getReviewID())) return true;
+		return false;
+	}
+	
+	@Override
+	public int hashCode(){
+		return review_id.hashCode();
+	}
 }

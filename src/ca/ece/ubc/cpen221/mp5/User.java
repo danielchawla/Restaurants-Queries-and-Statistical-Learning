@@ -1,26 +1,42 @@
 package ca.ece.ubc.cpen221.mp5;
 
 import java.util.*;
+import org.json.simple.JSONObject;
 
 public class User {
-    
-	private final Map<String, Integer> votes;
-	private int review_count;
-	private final String user_id;
-	private final String name;
-	private double average_stars;
 	
-	public User(int funnyVotes, int usefulVotes, int coolVotes, int review_count,
-			String user_id, String name, double average_stars){
+	final static String URL = "url";
+	final static String REVIEW_COUNT = "review_count";
+	final static String TYPE = "type";
+	final static String USER_ID = "user_id";
+	final static String NAME = "name";
+	final static String AVG_STARS = "average_stars";
+	final static String VOTES = "votes";
+	final static String COOL = "cool";
+	final static String USEFUL = "useful";
+	final static String FUNNY = "funny";
+	
+	final private Map<String, Integer> votes;
+	final private int review_count;
+	final private String user_id;
+	final private String name;
+	final private double average_stars;
+	final private JSONObject json_user;
+	
+	public User(JSONObject o){
+		
+		json_user = (JSONObject) o.clone();
 		
 		votes = new TreeMap<String, Integer>();
-		votes.put("funny", funnyVotes);
-		votes.put("useful", usefulVotes);
-		votes.put("cool", coolVotes);
-		this.review_count = review_count;
-		this.user_id = user_id;
-		this.name = name;
-		this.average_stars = average_stars;
+		JSONObject json_votes = (JSONObject) json_user.get(VOTES);
+		
+		votes.put(FUNNY, (int) json_votes.get(FUNNY));
+		votes.put(COOL, (int) json_votes.get(COOL));
+		votes.put(USEFUL, (int) json_votes.get(USEFUL));
+		review_count = (int) json_user.get(REVIEW_COUNT);
+		user_id = (String) json_user.get(USER_ID);
+		name = (String) json_user.get(NAME);
+		average_stars = (double) json_user.get(AVG_STARS);
 	}
 	
 	public Map<String, Integer> getVotes (){
@@ -41,13 +57,6 @@ public class User {
 	
 	public String getUserID (){
 		return user_id;
-	}
-	
-	public void addReview (int numOfStars){
-		long totalStars = Math.round(average_stars * review_count);
-		totalStars+=numOfStars;
-		review_count ++;
-		average_stars = ((double) totalStars) / review_count;
 	}
 	
 	@Override

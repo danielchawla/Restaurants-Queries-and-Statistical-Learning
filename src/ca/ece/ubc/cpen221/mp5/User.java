@@ -3,6 +3,7 @@ package ca.ece.ubc.cpen221.mp5;
 import java.util.*;
 
 public class User {
+    
 	private final Map<String, Integer> votes;
 	private int review_count;
 	private final String user_id;

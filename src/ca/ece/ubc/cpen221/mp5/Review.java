@@ -23,6 +23,7 @@ public class Review {
 	final private int stars;
 	final private String user_id;
 	final private String date;
+	final private String type;
 	final private JSONObject json_review;
 	
 	public Review(JSONObject o){
@@ -67,6 +68,10 @@ public class Review {
 	
 	public int getStars(){
 		return stars;
+	}
+	
+	public String getType(){
+		return type;
 	}
 	
 	@Override

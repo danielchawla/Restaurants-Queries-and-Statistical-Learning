@@ -15,7 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import ca.ece.ubc.cpen221.mp5.queries.QueryGrammerParser;
+import ca.ece.ubc.cpen221.mp5.queries.QueryParser;
 
 // TODO: This class represents the Restaurant Database.
 // Define the internal representation and 
@@ -26,6 +26,13 @@ public class RestaurantDB {
     private final Set<Restaurant> restaurantDatabase = new HashSet<Restaurant>();
     private final Set<Review> reviewDatabase = new HashSet<Review>();
     private final Set<User> userDatabase = new HashSet<User>();
+    
+    private static final String NAME = "name";
+    private static final String CATEGORY = "category";
+    private static final String RATING = "rating";
+    private static final String PRICE = "price";
+    private static final String IN = "in";
+    
 
 	/**
 	 * Create a database from the Yelp dataset given the names of three files:
@@ -272,9 +279,61 @@ public class RestaurantDB {
      * @return
      */
     public Set<Restaurant> query(String queryString) {
-//        QueryGrammerParser queryParser = new QueryGrammerParser();
         
-        return null;
+        QueryParser queryParser = new QueryParser();
+        return queryParser.parse(this, queryString);
+    }
+    
+    /**
+     * 
+     * @param request
+     * @param toFind
+     * @return
+     */
+    public Set<Restaurant> answerQuery(String requestType, String toFind) {
+        
+        Set<Restaurant> results = Collections.synchronizedSet(new HashSet<Restaurant>());
+        
+        switch (requestType) {
+            case NAME:
+                for(Restaurant restaurant: restaurantDatabase){
+                    if( restaurant.getName().equals(toFind)) 
+                        results.add(restaurant.clone());
+                }
+                break;
+            case CATEGORY:
+                for(Restaurant restaurant: restaurantDatabase){
+                    if( restaurant.getCategories().contains(toFind)) 
+                        results.add(restaurant.clone());
+                }
+                break;
+            case RATING:
+                for(Restaurant restaurant: restaurantDatabase){
+                    if( Math.round( (float)restaurant.getStars() ) == Math.round( (float)Double.parseDouble(toFind)) ){ 
+                        results.add(restaurant.clone());
+                    }
+                }
+                break;
+            case PRICE:
+                for(Restaurant restaurant: restaurantDatabase){
+                    if( Math.round( (float)restaurant.getPrice() ) == Math.round( (float)Double.parseDouble(toFind)) ) { 
+                        results.add(restaurant.clone());
+                    }
+                }
+                break;
+            case IN:
+                Set<String> neighborhoods;
+                for(Restaurant restaurant: restaurantDatabase){
+                    neighborhoods = restaurant.getNeighbors();
+                    if( neighborhoods.contains(toFind)) 
+                        results.add(restaurant.clone());
+                }
+                break;
+            default: 
+                break;
+                
+        } 
+        return results;
     }
 }
 

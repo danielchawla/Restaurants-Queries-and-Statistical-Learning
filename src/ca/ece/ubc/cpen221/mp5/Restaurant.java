@@ -118,7 +118,7 @@ public class Restaurant {
         return this.restaurantJSON.toJSONString();
     }
 
-    public Set<String> getSurroundingNeighbourhoods() {
+    public Set<String> getNeighbors() {
         Set<String> neighbourhoodDuplicate = new HashSet<String>();
         neighbourhoodDuplicate.addAll(neighbourhood);
         return Collections.unmodifiableSet(neighbourhoodDuplicate);

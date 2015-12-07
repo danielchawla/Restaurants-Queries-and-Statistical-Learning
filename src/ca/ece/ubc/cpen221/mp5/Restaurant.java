@@ -160,12 +160,12 @@ public class Restaurant {
     @Override
     public boolean equals(Object obj) {
         Restaurant that = (Restaurant) obj;
-        return ( this.businessID.equals(that.getBusinessID()) );
+        return ( this.coordinates.equals(that.getLocation()) && this.name.equals(that.getName()));
     }
 
     @Override
     public int hashCode() {
-        return this.businessID.hashCode();
+        return this.coordinates.hashCode() + 31 * this.name.hashCode();
     }
     
 }

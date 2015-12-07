@@ -16,34 +16,35 @@ public class Review {
 	final static String USER_ID = "user_id";
 	final static String DATE = "date";
 	
-	final private String business_id;
+	final private String businessID;
 	final private Map<String, Integer> votes = new HashMap<String, Integer>();
-	final private String review_id;
+	final private String reviewID;
 	final private String text;
 	final private int stars;
-	final private String user_id;
+	final private String userID;
 	final private String date;
 	final private String type;
-	final private JSONObject json_review;
+	
+	final private JSONObject jsonReview;
 	
 	public Review(JSONObject o){
-		json_review = (JSONObject) o.clone();
-		type = (String) json_review.get(TYPE);
-		business_id = (String) json_review.get(BUSINESS_ID);
-		JSONObject json_votes = (JSONObject) json_review.get(VOTES);
+		jsonReview = (JSONObject) o.clone();
+		type = (String) jsonReview.get(TYPE);
+		businessID = (String) jsonReview.get(BUSINESS_ID);
+		JSONObject json_votes = (JSONObject) jsonReview.get(VOTES);
 		votes.put(COOL, (Integer) json_votes.get(COOL));
 		votes.put(USEFUL, (Integer) json_votes.get(USEFUL));
 		votes.put(FUNNY, (Integer) json_votes.get(FUNNY));
 	
-		review_id = (String) json_review.get(REVIEW_ID);
-		text = (String) json_review.get(TEXT);
-		user_id = (String) json_review.get(USER_ID);
-		date = (String) json_review.get(DATE);
-		stars = (int) json_review.get(STARS);
+		reviewID = (String) jsonReview.get(REVIEW_ID);
+		text = (String) jsonReview.get(TEXT);
+		userID = (String) jsonReview.get(USER_ID);
+		date = (String) jsonReview.get(DATE);
+		stars = (int) jsonReview.get(STARS);
 	}
 	
 	public String getBusinessID(){
-		return business_id;
+		return this.businessID;
 	}
 	
 	public Map<String, Integer> getVotes(){
@@ -51,27 +52,31 @@ public class Review {
 	}
 	
 	public String getReviewID(){
-		return review_id;
+		return this.reviewID;
 	}
 	
 	public String getText(){
-		return text;
+		return this.text;
 	}
 	
 	public String getUserID(){
-		return user_id;
+		return this.userID;
 	}
 	
 	public String getDate(){
-		return date;
+		return this.date;
 	}
 	
 	public int getStars(){
-		return stars;
+		return this.stars;
 	}
 	
 	public String getType(){
-		return type;
+		return this.type;
+	}
+	
+	public String getJSON(){
+	    return this.jsonReview.toJSONString();
 	}
 	
 	@Override
@@ -84,6 +89,6 @@ public class Review {
 	
 	@Override
 	public int hashCode(){
-		return review_id.hashCode();
+		return reviewID.hashCode();
 	}
 }

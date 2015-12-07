@@ -10,7 +10,7 @@ import org.json.simple.JSONArray;
 
 public class Restaurant {
     
-    final private JSONObject restaurant;
+    final private JSONObject restaurantJSON;
     
     final static String LONGITUDE = "longitude";
     final static String LATITUDE = "latitude";
@@ -28,8 +28,8 @@ public class Restaurant {
     final static String PRICE = "price";
     final static String PHOTO = "photo_url";
 	final static String SCHOOLS = "schools";
-	final private Location coordinates = new Location((Double) this.restaurant.get(LATITUDE),
-			(Double) this.restaurant.get(LONGITUDE));
+	final private Location coordinates = new Location((Double) this.restaurantJSON.get(LATITUDE),
+			(Double) this.restaurantJSON.get(LONGITUDE));
 
     final private String city;
     final private String address;
@@ -53,45 +53,41 @@ public class Restaurant {
      */
     public Restaurant(JSONObject object) {
         
-        this.restaurant = (JSONObject) object.clone();
-        this.name = (String) this.restaurant.get(NAME);
-        this.businessID = (String) this.restaurant.get(BUSINESSID);
-        this.city = (String) this.restaurant.get(CITY);
-        this.address = (String) this.restaurant.get(ADDRESS);
-        this.state = (String) this.restaurant.get(STATE);
+        this.restaurantJSON = (JSONObject) object.clone();
+        this.name = (String) this.restaurantJSON.get(NAME);
+        this.businessID = (String) this.restaurantJSON.get(BUSINESSID);
+        this.city = (String) this.restaurantJSON.get(CITY);
+        this.address = (String) this.restaurantJSON.get(ADDRESS);
+        this.state = (String) this.restaurantJSON.get(STATE);
         
-        this.photo = (String) this.restaurant.get(PHOTO);
-        this.type = (String) this.restaurant.get(TYPE);
-        this.stars = (Double) this.restaurant.get(STARS);
-        this.reviewCount = (long) this.restaurant.get(REVIEWCOUNT);
-        this.price = (int) this.restaurant.get(PRICE);
+        this.photo = (String) this.restaurantJSON.get(PHOTO);
+        this.type = (String) this.restaurantJSON.get(TYPE);
+        this.stars = (Double) this.restaurantJSON.get(STARS);
+        this.reviewCount = (long) this.restaurantJSON.get(REVIEWCOUNT);
+        this.price = (int) this.restaurantJSON.get(PRICE);
 
-        JSONArray neighborhoods = (JSONArray) this.restaurant.get(NEIGHBORHOOD);
+        JSONArray neighborhoods = (JSONArray) this.restaurantJSON.get(NEIGHBORHOOD);
         for (Object neighbor : neighborhoods) {
             this.neighbourhood.add((String) neighbor);
         }
 
-        JSONArray categories = (JSONArray) this.restaurant.get(CATEGORIES);
+        JSONArray categories = (JSONArray) this.restaurantJSON.get(CATEGORIES);
         for (Object category : categories) {
             this.categories.add((String) category);
         }
 
-        JSONArray schools = (JSONArray) this.restaurant.get(SCHOOLS);
+        JSONArray schools = (JSONArray) this.restaurantJSON.get(SCHOOLS);
         for (Object school : schools) {
             this.schools.add((String) school);
         }
     }
     
     public Restaurant clone() {
-        return new Restaurant(this.restaurant);
+        return new Restaurant(this.restaurantJSON);
     }
 
     public String getName() {
         return this.name;
-    }
-
-    public String getJSONString() {
-        return this.restaurant.toJSONString();
     }
 
     public String getBusinessID() {
@@ -116,6 +112,10 @@ public class Restaurant {
     
     public Location getLocation() {
         return coordinates.clone();
+    }
+    
+    public String getJSON() {
+        return this.restaurantJSON.toJSONString();
     }
 
     public Set<String> getSurroundingNeighbourhoods() {

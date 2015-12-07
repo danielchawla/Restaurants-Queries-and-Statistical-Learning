@@ -1,7 +1,9 @@
 package ca.ece.ubc.cpen221.mp5;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import java.io.BufferedReader;
@@ -109,7 +111,6 @@ public class RestaurantDB {
 	
 	/**
 	 * Finds a restaurant with given id.
-	 * 
 	 * @param business_id
 	 *            the ID of the restaurant that is to be returned
 	 * @return the restaurant with ID the same as business_id.
@@ -129,16 +130,28 @@ public class RestaurantDB {
 	 * @param restaurantName
 	 * @return random review in JSONObject format 
 	 */
-	public JSONObject randomReview(String restaurantName){
-	    // TODO: finish this
+	public String randomReview(String restaurantName){
 	    
-	    // find first restaurant
-	    // get list of all reviews 
-	    // find list size
-	    // multiply by random percentage
-	    // return result
+	    String restaurantID = null;
 	    
-	    return null;
+	    // finds first restaurant with given name
+	    for (Restaurant restaurant: restaurantDatabase){
+	       if (restaurant.getName().equals(restaurantName)){
+	           restaurantID = restaurant.getBusinessID();
+	           break;
+	       }
+	    }
+	    // throws Exception if no restaurant found with given name
+	    if (restaurantID == null) throw new IllegalArgumentException("Can't find restaurant with given name.");
+
+	    List<Review> reviews = new ArrayList<Review>();
+	    for(Review review: reviewDatabase){
+	        if (review.getBusinessID().equals(restaurantID)){
+	            reviews.add(review);
+	        }
+	    }
+	    int index = Math.round( (float) (Math.random() * reviews.size())); // finds random index
+	    return reviews.get(index).getJSON();
 	}
 	 
 	/**
@@ -148,7 +161,14 @@ public class RestaurantDB {
 	 * @return String with restaurant details in JSON format
 	 */
 	public String getRestaurant(String businessID){
-	    return null;
+	    
+	    for (Restaurant restaurant: restaurantDatabase){
+	           if (restaurant.getBusinessID().equals(businessID)){
+	               return restaurant.getJSON();
+	           }
+	        }
+	    
+	    throw new IllegalArgumentException("No restaurant found with given ID");
 	}
 	
 	/**

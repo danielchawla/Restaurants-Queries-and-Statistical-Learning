@@ -20,8 +20,6 @@ public class RestaurantDBServer {
 	 * @param filename3
 	 */
 	public RestaurantDBServer(int port, String restaurants, String reviews, String users) {
-		// TODO: See the problem statement for what the arguments are.
-		// TODO: Rename the arguments suitably.
 	    db = new RestaurantDB(restaurants, reviews, users);
 	    
 	    try{

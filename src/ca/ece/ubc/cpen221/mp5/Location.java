@@ -1,5 +1,9 @@
 package ca.ece.ubc.cpen221.mp5;
-
+/**
+ * Represents a location parameterized in latitude and longitude.
+ * @author Ryan
+ *
+ */
 public class Location{
 	private static final double CLOSE = 0.001;
 	

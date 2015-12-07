@@ -2,11 +2,9 @@ package ca.ece.ubc.cpen221.mp5;
 
 public class Main{
 
-	private static final int PORT = 5555;
-
 	public static void main (String[] args){
 
-		new RestaurantDBServer(PORT, "restaurants.json", "reviews.json", "users.json");
-
+		//RestaurantDBServer(int port, String restaurants, String reviews, String users)
+		new RestaurantDBServer(Integer.parseInt(args[0]), args[1], args[2], args[3]);
 	}
 }

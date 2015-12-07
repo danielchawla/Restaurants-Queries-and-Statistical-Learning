@@ -28,10 +28,9 @@ public class Restaurant {
     final static String PRICE = "price";
     final static String PHOTO = "photo_url";
 	final static String SCHOOLS = "schools";
-	final private Location coordinates = new Location((Double) this.restaurantJSON.get(LATITUDE),
-			(Double) this.restaurantJSON.get(LONGITUDE));
-
-    final private String city;
+	
+	final private Location coordinates;
+	final private String city;
     final private String address;
     final private String state;
     final private Set<String> neighbourhood = new HashSet<String>();
@@ -42,7 +41,7 @@ public class Restaurant {
     
     final private double stars; // rep invariant: 0 <= stars <= 5.0
     private long reviewCount; // rep invariant: review >= 0
-    final private int price; // rep invariant: 1 <= price <= 4
+    final private long price; // rep invariant: 1 <= price <= 4
     final private String photo;
     final private Set<String> schools = new HashSet<String>();
 
@@ -64,7 +63,9 @@ public class Restaurant {
         this.type = (String) this.restaurantJSON.get(TYPE);
         this.stars = (Double) this.restaurantJSON.get(STARS);
         this.reviewCount = (long) this.restaurantJSON.get(REVIEWCOUNT);
-        this.price = (int) this.restaurantJSON.get(PRICE);
+        this.price = (long) this.restaurantJSON.get(PRICE);
+        this.coordinates = new Location((Double) this.restaurantJSON.get(LATITUDE),
+        		(Double) this.restaurantJSON.get(LONGITUDE));
 
         JSONArray neighborhoods = (JSONArray) this.restaurantJSON.get(NEIGHBORHOOD);
         for (Object neighbor : neighborhoods) {
@@ -138,7 +139,7 @@ public class Restaurant {
         return this.reviewCount;
     }
 
-    public int getPrice() {
+    public long getPrice() {
         return this.price;
     }
 

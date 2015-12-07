@@ -1,5 +1,7 @@
 package ca.ece.ubc.cpen221.mp5;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -18,9 +20,9 @@ import org.json.simple.parser.ParseException;
 
 public class RestaurantDB {
     
-    private final Set<Restaurant> restaurantDatabase = new CopyOnWriteArraySet<Restaurant>();
-    private final Set<Review> reviewDatabase = new CopyOnWriteArraySet<Review>();
-    private final Set<User> userDatabase = new CopyOnWriteArraySet<User>();
+    private final Set<Restaurant> restaurantDatabase = new HashSet<Restaurant>();
+    private final Set<Review> reviewDatabase = new HashSet<Review>();
+    private final Set<User> userDatabase = new HashSet<User>();
 
 	/**
 	 * Create a database from the Yelp dataset given the names of three files:
@@ -103,18 +105,7 @@ public class RestaurantDB {
 	 * @return all restaurants in restaurant database.
 	 */
 	public Set<Restaurant> getRestaurants(){
-		return this.restaurantDatabase;
-		
-	}
-
-	/**
-	 * 
-	 * @param queryString
-	 * @return
-	 */
-	public Set<Restaurant> query(String queryString) {
-	  //TODO: implement this
-		return null;
+		return Collections.unmodifiableSet(this.restaurantDatabase);
 	}
 	
 	/**
@@ -124,7 +115,14 @@ public class RestaurantDB {
 	 * @return random review in JSONObject format 
 	 */
 	public JSONObject randomReview(String restaurantName){
-	    // TODO: changes this
+	    // TODO: finish this
+	    
+	    // find first restaurant
+	    // get list of all reviews 
+	    // find list size
+	    // multiply by random percentage
+	    // return result
+	    
 	    return null;
 	}
 	 
@@ -135,37 +133,7 @@ public class RestaurantDB {
 	 * @return String with restaurant details in JSON format
 	 */
 	public String getRestaurant(String businessID){
-	    // TODO: change this
 	    return null;
-	}
-	
-
-	
-	/**
-	 * Checks if restaurant exists and if not, adds new restaurant to restaurantDatabase. 
-	 * @param restaurantDetails 
-	 *     rep invariant: String must be JSON format. String must not be null.    
-	 */
-	public synchronized void addRestaurant(String restaurantDetails){
-	    
-	}
-	
-	/**
-     * Checks if user exists and if not, adds new user to userDatabase. 
-     * @param userDetails 
-     *     rep invariant: String must be JSON format. String must not be null.    
-     */
-	public synchronized void addUser(String userDetails){
-	    
-	}
-	
-    /**
-     * Checks if review exists and if not, adds new review to userDatabase. 
-     * @param reviewDetails 
-     *     rep invariant: String must be JSON format. String must not be null.    
-     */
-	public synchronized void addReview(String reviewDetails){
-	    
 	}
 	
 	/**
@@ -175,6 +143,43 @@ public class RestaurantDB {
      */
     public Set<Review> getReviews(String userID){
         //TODO: decided if we need this
+        return null;
+    }
+    
+    /**
+     * Checks if restaurant exists and if not, adds new restaurant to restaurantDatabase. 
+     * @param restaurantDetails 
+     *     rep invariant: String must be JSON format. String must not be null.    
+     */
+    public synchronized void addRestaurant(String restaurantDetails){
+        
+    }
+    
+    /**
+     * Checks if user exists and if not, adds new user to userDatabase. 
+     * @param userDetails 
+     *     rep invariant: String must be JSON format. String must not be null.    
+     */
+    public synchronized void addUser(String userDetails){
+        
+    }
+    
+    /**
+     * Checks if review exists and if not, adds new review to userDatabase. 
+     * @param reviewDetails 
+     *     rep invariant: String must be JSON format. String must not be null.    
+     */
+    public synchronized void addReview(String reviewDetails){
+        
+    }
+    
+    /**
+     * 
+     * @param queryString
+     * @return
+     */
+    public Set<Restaurant> query(String queryString) {
+      //TODO: implement this
         return null;
     }
 }

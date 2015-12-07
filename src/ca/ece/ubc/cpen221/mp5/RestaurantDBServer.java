@@ -1,6 +1,6 @@
 package ca.ece.ubc.cpen221.mp5;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 
 // TODO: Implement a server that will instantiate a database, 
@@ -8,10 +8,8 @@ import java.net.*;
 
 public class RestaurantDBServer {
     
-    private final int port;
     private ServerSocket socket;
     private final RestaurantDB db;
-    private boolean online;
 
 	/**
 	 * Constructor
@@ -25,32 +23,56 @@ public class RestaurantDBServer {
 		// TODO: See the problem statement for what the arguments are.
 		// TODO: Rename the arguments suitably.
 	    db = new RestaurantDB(restaurants, reviews, users);
-	    this.port = port;
 	    
 	    try{
 			socket = new ServerSocket(port);
-			online = true;
 		}catch (IOException e){
 			e.printStackTrace();
 			return;
 		}
 	    
-	    while(online){
+	    while(true){
 	    	Socket client;
-	    	try{
-	    		client = socket.accept();
-	    	}catch(IOException e ){
-	    		if(!online) break;
-	    		else e.printStackTrace();
-	    	}
-	    	new Thread(new RestaurantDBWorker(socket, db)).start();
-	    }
-	    
-	    try{
-	    	socket.close();
-	    }catch(IOException e){
-	    	e.printStackTrace();
+    		try{
+				client = socket.accept();
+			
+		    	new Thread(new Runnable(){
+		
+					@Override
+					public void run ( ){
+						try{
+							handle(client);
+							client.close();
+						}catch (IOException e){
+							e.printStackTrace();
+						}
+					}
+					
+		    	});
+		    	
+    		}catch (IOException e){
+				e.printStackTrace();
+			}
 	    }
 	}
+	
+	private void handle(Socket socket) throws IOException {
+		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		PrintWriter output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
+		
+		String line;
+		do{
+			line = input.readLine();
+			String restaurants = "";
+			for(Restaurant restaurant : db.query(line)){
+				restaurants.concat("Name: " + restaurant.getName() + " // Location: (" + restaurant.getAddress()
+						+ " // Rating: " + restaurant.getStars());
+			}
+			output.println(restaurants);
+		}while(line != null);
+		input.close();
+		output.close();
+	}
+
 
 }

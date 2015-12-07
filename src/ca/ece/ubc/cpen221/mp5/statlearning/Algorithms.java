@@ -132,10 +132,9 @@ public class Algorithms {
 	public static MP5Function getPredictor(User u, RestaurantDB db, MP5Function featureFunction) {
 		Set<Review> reviews = db.getReviews(u.getUserID());
 		Map<Double, Double> coordinates = new HashMap<>();
-		Set<Restaurant> restaurants = db.getRestaurants();
 		
 		for(Review review : reviews)
-			coordinates.put(review.getStars(), featureFunction.f(db.getRestaurant(review.getBusinessID()), db));
+			coordinates.put((double) review.getStars(), featureFunction.f( db.findRestaurant(review.getBusinessID()) , db));
 		
 		return new Regression(coordinates, featureFunction);
 	}

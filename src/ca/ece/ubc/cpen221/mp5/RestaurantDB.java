@@ -106,6 +106,21 @@ public class RestaurantDB {
 		return this.restaurantDatabase;
 		
 	}
+	
+	/**
+	 * Finds a restaurant with given id.
+	 * 
+	 * @param business_id
+	 *            the ID of the restaurant that is to be returned
+	 * @return the restaurant with ID the same as business_id.
+	 */
+	public Restaurant findRestaurant (String business_id){
+		for (Restaurant restaurant : restaurantDatabase){
+			if (restaurant.getBusinessID().equals(business_id))
+				return restaurant.clone();
+		}
+		throw new IllegalArgumentException("Restaurant not found.");
+	}
 
 	/**
 	 * 

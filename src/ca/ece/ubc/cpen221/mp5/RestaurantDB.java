@@ -162,12 +162,11 @@ public class RestaurantDB {
 	 */
 	public String getRestaurant(String businessID){
 	    
-	    for (Restaurant restaurant: restaurantDatabase){
-	           if (restaurant.getBusinessID().equals(businessID)){
-	               return restaurant.getJSON();
-	           }
-	        }
-	    
+        for (Restaurant restaurant : restaurantDatabase) {
+            if (restaurant.getBusinessID().equals(businessID)) {
+                return restaurant.getJSON();
+            }
+        }
 	    throw new IllegalArgumentException("No restaurant found with given ID");
 	}
 	
@@ -177,8 +176,15 @@ public class RestaurantDB {
      * @return set of reviews
      */
     public Set<Review> getReviews(String userID){
-        //TODO: decided if we need this
-        return null;
+        
+        Set<Review> reviews = new HashSet<Review>();
+        
+        for (Review review : reviewDatabase) {
+            if (review.getUserID().equals(userID)){
+                reviews.add(review);
+            }
+        }
+        return reviews;
     }
     
     /**
@@ -188,6 +194,22 @@ public class RestaurantDB {
      */
     public synchronized void addRestaurant(String restaurantDetails){
         
+        boolean alreadyExists = false;
+        JSONParser parser = new JSONParser();
+        
+        try {
+            Restaurant toAdd;
+            toAdd = new Restaurant((JSONObject) parser.parse((restaurantDetails)));
+            
+            for (Restaurant restaurant : restaurantDatabase) {    
+                if ( restaurant.equals(toAdd) ) {
+                        alreadyExists = true; 
+                }
+            }
+            
+            if (alreadyExists == true) throw new IllegalArgumentException("Restaurant already exists.");
+            else restaurantDatabase.add(toAdd);
+        } catch (ParseException e) { e.printStackTrace(); }
     }
     
     /**
@@ -197,6 +219,23 @@ public class RestaurantDB {
      */
     public synchronized void addUser(String userDetails){
         
+        boolean alreadyExists = false;
+        JSONParser parser = new JSONParser();
+        
+        try {
+            User toAdd;
+            toAdd = new User((JSONObject) parser.parse((userDetails)));
+            
+            for (User user : userDatabase) {    
+                if ( user.equals(toAdd) ) {
+                        alreadyExists = true; 
+                }
+            }
+            
+            if (alreadyExists == true) 
+                throw new IllegalArgumentException("Error. User with given ID already exists.");
+            else userDatabase.add(toAdd);
+        } catch (ParseException e) { e.printStackTrace(); }
     }
     
     /**
@@ -206,6 +245,23 @@ public class RestaurantDB {
      */
     public synchronized void addReview(String reviewDetails){
         
+        boolean alreadyExists = false;
+        JSONParser parser = new JSONParser();
+        
+        try {
+            Review toAdd;
+            toAdd = new Review((JSONObject) parser.parse((reviewDetails)));
+            
+            for (Review review : reviewDatabase) {    
+                if ( review.equals(toAdd) ) {
+                        alreadyExists = true; 
+                }
+            }
+            
+            if (alreadyExists == true) 
+                throw new IllegalArgumentException("Error. Review already exists.");
+            else reviewDatabase.add(toAdd);
+        } catch (ParseException e) { e.printStackTrace(); } 
     }
     
     /**

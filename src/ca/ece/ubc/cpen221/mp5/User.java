@@ -16,8 +16,8 @@ public class User {
 	final static String USEFUL = "useful";
 	final static String FUNNY = "funny";
 	
-	final private Map<String, Integer> votes;
-	final private int review_count;
+	final private Map<String, Long> votes;
+	final private long review_count;
 	final private String user_id;
 	final private String name;
 	final private double average_stars;
@@ -27,19 +27,19 @@ public class User {
 		
 		json_user = (JSONObject) o.clone();
 		
-		votes = new TreeMap<String, Integer>();
+		votes = new TreeMap<String, Long>();
 		JSONObject json_votes = (JSONObject) json_user.get(VOTES);
 		
-		votes.put(FUNNY, (int) json_votes.get(FUNNY));
-		votes.put(COOL, (int) json_votes.get(COOL));
-		votes.put(USEFUL, (int) json_votes.get(USEFUL));
-		review_count = (int) json_user.get(REVIEW_COUNT);
+		votes.put(FUNNY, (long) json_votes.get(FUNNY));
+		votes.put(COOL, (long) json_votes.get(COOL));
+		votes.put(USEFUL, (long) json_votes.get(USEFUL));
+		review_count = (long) json_user.get(REVIEW_COUNT);
 		user_id = (String) json_user.get(USER_ID);
 		name = (String) json_user.get(NAME);
 		average_stars = (double) json_user.get(AVG_STARS);
 	}
 	
-	public Map<String, Integer> getVotes (){
+	public Map<String, Long> getVotes (){
 		return Collections.unmodifiableMap(votes);
 	}
 	
@@ -47,7 +47,7 @@ public class User {
 		return name;
 	}
 	
-	public int getReviewCount(){
+	public long getReviewCount(){
 		return review_count;
 	}
 	

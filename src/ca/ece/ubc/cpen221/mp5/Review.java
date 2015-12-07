@@ -17,10 +17,10 @@ public class Review {
 	final static String DATE = "date";
 	
 	final private String businessID;
-	final private Map<String, Integer> votes = new HashMap<String, Integer>();
+	final private Map<String, Long> votes = new HashMap<String, Long>();
 	final private String reviewID;
 	final private String text;
-	final private int stars;
+	final private long stars;
 	final private String userID;
 	final private String date;
 	final private String type;
@@ -32,22 +32,22 @@ public class Review {
 		type = (String) jsonReview.get(TYPE);
 		businessID = (String) jsonReview.get(BUSINESS_ID);
 		JSONObject json_votes = (JSONObject) jsonReview.get(VOTES);
-		votes.put(COOL, (Integer) json_votes.get(COOL));
-		votes.put(USEFUL, (Integer) json_votes.get(USEFUL));
-		votes.put(FUNNY, (Integer) json_votes.get(FUNNY));
+		votes.put(COOL, (Long) json_votes.get(COOL));
+		votes.put(USEFUL, (Long) json_votes.get(USEFUL));
+		votes.put(FUNNY, (Long) json_votes.get(FUNNY));
 	
 		reviewID = (String) jsonReview.get(REVIEW_ID);
 		text = (String) jsonReview.get(TEXT);
 		userID = (String) jsonReview.get(USER_ID);
 		date = (String) jsonReview.get(DATE);
-		stars = (int) jsonReview.get(STARS);
+		stars = (long) jsonReview.get(STARS);
 	}
 	
 	public String getBusinessID(){
 		return this.businessID;
 	}
 	
-	public Map<String, Integer> getVotes(){
+	public Map<String, Long> getVotes(){
 		return Collections.unmodifiableMap(votes);
 	}
 	
@@ -67,7 +67,7 @@ public class Review {
 		return this.date;
 	}
 	
-	public int getStars(){
+	public long getStars(){
 		return this.stars;
 	}
 	

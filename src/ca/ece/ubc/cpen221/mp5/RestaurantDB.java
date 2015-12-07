@@ -99,8 +99,8 @@ public class RestaurantDB {
 	}
 	
 	/**
-	 * 
-	 * @return
+	 * Finds and returns all restaurants
+	 * @return all restaurants in restaurant database.
 	 */
 	public Set<Restaurant> getRestaurants(){
 		return this.restaurantDatabase;
@@ -146,7 +146,7 @@ public class RestaurantDB {
 	 * @param restaurantDetails 
 	 *     rep invariant: String must be JSON format. String must not be null.    
 	 */
-	public void addRestaurant(String restaurantDetails){
+	public synchronized void addRestaurant(String restaurantDetails){
 	    
 	}
 	
@@ -155,7 +155,7 @@ public class RestaurantDB {
      * @param userDetails 
      *     rep invariant: String must be JSON format. String must not be null.    
      */
-	public void addUser(String userDetails){
+	public synchronized void addUser(String userDetails){
 	    
 	}
 	
@@ -164,7 +164,7 @@ public class RestaurantDB {
      * @param reviewDetails 
      *     rep invariant: String must be JSON format. String must not be null.    
      */
-	public void addReview(String reviewDetails){
+	public synchronized void addReview(String reviewDetails){
 	    
 	}
 	

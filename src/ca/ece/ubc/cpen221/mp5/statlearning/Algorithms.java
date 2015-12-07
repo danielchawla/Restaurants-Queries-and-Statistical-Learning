@@ -130,12 +130,30 @@ public class Algorithms {
 	}
 
 	public static MP5Function getPredictor(User u, RestaurantDB db, MP5Function featureFunction) {
-		// TODO: Implement this method
-		return null;
+		Set<Review> reviews = db.getReviews(u.getUserID());
+		Map<Double, Double> coordinates = new HashMap<>();
+		
+		for(Review review : reviews)
+			coordinates.put((double) review.getStars(), featureFunction.f( db.findRestaurant(review.getBusinessID()) , db));
+		
+		return new Regression(coordinates, featureFunction);
 	}
 
 	public static MP5Function getBestPredictor(User u, RestaurantDB db, List<MP5Function> featureFunctionList) {
-		// TODO: Implement this method
-		return null;
+		boolean firstFunction = true;
+		Regression bestPredictor = null;
+		for(MP5Function feature : featureFunctionList){
+			if(firstFunction){
+				bestPredictor = (Regression) getPredictor(u, db, feature);
+				firstFunction = false;
+			}
+			else{
+				Regression currentPredictor = (Regression) getPredictor(u, db, feature);
+				if(currentPredictor.getR2() > bestPredictor.getR2()){
+					bestPredictor = currentPredictor;
+				}
+			}
+		}
+		return bestPredictor;
 	}
 }

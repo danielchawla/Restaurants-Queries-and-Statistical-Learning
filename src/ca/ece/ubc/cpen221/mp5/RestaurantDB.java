@@ -3,7 +3,6 @@ package ca.ece.ubc.cpen221.mp5;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -105,8 +104,24 @@ public class RestaurantDB {
 	 * @return all restaurants in restaurant database.
 	 */
 	public Set<Restaurant> getRestaurants(){
-		return Collections.unmodifiableSet(this.restaurantDatabase);
+		return Collections.unmodifiableSet(this.restaurantDatabase);		
 	}
+	
+	/**
+	 * Finds a restaurant with given id.
+	 * 
+	 * @param business_id
+	 *            the ID of the restaurant that is to be returned
+	 * @return the restaurant with ID the same as business_id.
+	 */
+	public Restaurant findRestaurant (String business_id){
+		for (Restaurant restaurant : restaurantDatabase){
+			if (restaurant.getBusinessID().equals(business_id))
+				return restaurant.clone();
+		}
+		throw new IllegalArgumentException("Restaurant not found.");
+	}
+
 	
 	/**
 	 * Outputs random review of a restaurant that matches restaurantName. If more than one name matches

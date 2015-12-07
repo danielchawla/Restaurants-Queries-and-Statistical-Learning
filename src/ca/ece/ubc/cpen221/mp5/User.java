@@ -17,10 +17,10 @@ public class User {
 	final static String FUNNY = "funny";
 	
 	final private Map<String, Long> votes;
-	final private String userID;
-	final private String name;
-	final private double averageStars;
-	final private long reviewCount;
+	final private String userID; // rep invariant: ID contains only ASCII characters
+	final private String name; // rep invariant: name contains only ASCII characters
+	final private double averageStars; // rep invariant: 0<= avgStars <= 5
+	final private long reviewCount; // rep invariant: reviewCount >= 0
 	
 	final private JSONObject json_user;
 	

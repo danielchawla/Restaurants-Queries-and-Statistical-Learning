@@ -16,17 +16,23 @@ public class Review {
 	final static String USER_ID = "user_id";
 	final static String DATE = "date";
 	
-	final private String businessID;
+	final private String businessID; // rep invariant: is valid businessID
 	final private Map<String, Long> votes = new HashMap<String, Long>();
-	final private String reviewID;
+	final private String reviewID; 
 	final private String text;
-	final private long stars;
+	final private long stars; // rep invariant: 1 <= stars <= 5
 	final private String userID;
-	final private String date;
+	final private String date; // rep invariant: is valid date newer than Yelp start date
 	final private String type;
 	
 	final private JSONObject jsonReview;
 	
+	/**
+	 * Constructs new review from passed JSONObject.
+	 * @param JSONObject representing review
+	 *     rep invariant: JSONObject is not null, is properly formatted, 
+	 *     and contains all related fields.
+	 */
 	public Review(JSONObject o){
 		jsonReview = (JSONObject) o.clone();
 		type = (String) jsonReview.get(TYPE);
@@ -43,38 +49,74 @@ public class Review {
 		stars = (long) jsonReview.get(STARS);
 	}
 	
+	/**
+	 * Retrieves business ID of restaurant for which review was made.
+	 * @return businessID
+	 */
 	public String getBusinessID(){
 		return this.businessID;
 	}
 	
+	/**
+	 * Retrieves map of votes that review contains.
+	 * @return votes
+	 */
 	public Map<String, Long> getVotes(){
 		return Collections.unmodifiableMap(votes);
 	}
 	
+	/**
+	 * Retrieves ID of review.
+	 * @return reviewID
+	 */
 	public String getReviewID(){
 		return this.reviewID;
 	}
 	
+	/**
+	 * Retrieves main body text of review.
+	 * @return body text
+	 */
 	public String getText(){
 		return this.text;
 	}
 	
+	/**
+	 * Retrieves ID of user who posted review.
+	 * @return userID
+	 */
 	public String getUserID(){
 		return this.userID;
 	}
 	
+	/**
+	 * Retrieves the date review was updated.
+	 * @return date
+	 */
 	public String getDate(){
 		return this.date;
 	}
 	
+	/**
+	 * Retrieves num of stars that review has.
+	 * @return num of stars
+	 */
 	public long getStars(){
 		return this.stars;
 	}
 	
+	/**
+	 * Retrieves review type.
+	 * @return type
+	 */
 	public String getType(){
 		return this.type;
 	}
 	
+	/**
+	 * Retrieves Review in JSON format
+	 * @return review in JSON format.
+	 */
 	public String getJSON(){
 	    return this.jsonReview.toJSONString();
 	}

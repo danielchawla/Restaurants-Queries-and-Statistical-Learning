@@ -17,12 +17,18 @@ public class User {
 	final static String FUNNY = "funny";
 	
 	final private Map<String, Long> votes;
-	final private long review_count;
-	final private String user_id;
+	final private String userID;
 	final private String name;
-	final private double average_stars;
+	final private double averageStars;
+	final private long reviewCount;
+	
 	final private JSONObject json_user;
 	
+	/**
+	 * Creates a new user.
+	 * @param JSONObject representing user 
+	 *     rep invariant: must be properly formatted, must contain all fields, can't be null.
+	 */
 	public User(JSONObject o){
 		
 		json_user = (JSONObject) o.clone();
@@ -33,30 +39,50 @@ public class User {
 		votes.put(FUNNY, (long) json_votes.get(FUNNY));
 		votes.put(COOL, (long) json_votes.get(COOL));
 		votes.put(USEFUL, (long) json_votes.get(USEFUL));
-		review_count = (long) json_user.get(REVIEW_COUNT);
-		user_id = (String) json_user.get(USER_ID);
+		reviewCount = (long) json_user.get(REVIEW_COUNT);
+		userID = (String) json_user.get(USER_ID);
 		name = (String) json_user.get(NAME);
-		average_stars = (double) json_user.get(AVG_STARS);
+		averageStars = (double) json_user.get(AVG_STARS);
 	}
 	
+	/**
+	 * Returns votes.
+	 * @return an immutable map of votes
+	 */
 	public Map<String, Long> getVotes (){
 		return Collections.unmodifiableMap(votes);
 	}
 	
+	/**
+	 * Returns user's name.
+	 * @return name
+	 */
 	public String getName(){
-		return name;
+		return this.name;
 	}
 	
+	/**
+	 * Return's number of reviews a user has.
+	 * @return reviewCount
+	 */
 	public long getReviewCount(){
-		return review_count;
+		return this.reviewCount;
 	}
 	
+	/**
+	 * Retrieves the average number of stars a user rates a restaurant with.
+	 * @return averageStars
+	 */
 	public double getAvgStars(){
-		return average_stars;
+		return this.averageStars;
 	}
 	
+	/**
+	 * Retrieves user's ID number.
+	 * @return userID.
+	 */
 	public String getUserID (){
-		return user_id;
+		return this.userID;
 	}
 	
 	@Override
@@ -69,6 +95,6 @@ public class User {
 	
 	@Override
 	public int hashCode(){
-		return user_id.hashCode();
+		return userID.hashCode();
 	}
 }

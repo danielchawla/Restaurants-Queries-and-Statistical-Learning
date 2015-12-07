@@ -57,6 +57,7 @@ public class Restaurant {
         //      - review >= 0.0
         //      - 1.0 <= stars <= 5.0
         //      - businessID is unique
+        //      - name is accurate and is written with only ASCII characters
         //      - schools, city, address, and state are real and accurate
         //      - coordinates are real and represent actual location on earth
         

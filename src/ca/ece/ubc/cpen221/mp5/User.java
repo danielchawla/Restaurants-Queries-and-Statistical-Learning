@@ -17,10 +17,10 @@ public class User {
 	final static String FUNNY = "funny";
 	
 	final private Map<String, Long> votes;
-	final private String userID; // rep invariant: ID contains only ASCII characters
-	final private String name; // rep invariant: name contains only ASCII characters
-	final private double averageStars; // rep invariant: 0<= avgStars <= 5
-	final private long reviewCount; // rep invariant: reviewCount >= 0
+	final private String userID; 
+	final private String name;
+	final private double averageStars; 
+	final private long reviewCount;
 	
 	final private JSONObject json_user;
 	
@@ -30,6 +30,14 @@ public class User {
 	 *     rep invariant: must be properly formatted, must contain all fields, can't be null.
 	 */
 	public User(JSONObject o){
+	    //
+	    // Abstraction function: Represents a user who has signed up with a yelp account
+	    //
+	    // rep invariant: 
+	    //         - ID contains only ASCII characters and is unique
+	    //         - all fields are not null and accurate
+	    //         - 0.0 <= averageStars <= 5.0
+	    //         - reviewCount >= 0
 		
 		json_user = (JSONObject) o.clone();
 		

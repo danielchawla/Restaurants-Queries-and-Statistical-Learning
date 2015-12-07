@@ -16,13 +16,13 @@ public class Review {
 	final static String USER_ID = "user_id";
 	final static String DATE = "date";
 	
-	final private String businessID; // rep invariant: is valid businessID
+	final private String businessID;
 	final private Map<String, Long> votes = new HashMap<String, Long>();
 	final private String reviewID; 
 	final private String text;
-	final private long stars; // rep invariant: 1 <= stars <= 5
+	final private long stars; 
 	final private String userID;
-	final private String date; // rep invariant: is valid date newer than Yelp start date
+	final private String date; 
 	final private String type;
 	
 	final private JSONObject jsonReview;
@@ -34,6 +34,17 @@ public class Review {
 	 *     and contains all related fields.
 	 */
 	public Review(JSONObject o){
+	    // 
+	    // Abstraction function: represents reviews that a user has given a restaurant (presumably after
+	    //         having a meaningful interaction with restaurant).
+	    //
+	    // Rep invariant: 
+	    //         - business ID is unique, represents correct restaurant, contains only ASCII characters
+	    //         - no fields are null, all fields are accurate and valid
+	    //         - 1 <= stars <= 5
+	    //         - name is accurate and is written with only ASCII characters
+	    //         - date is valid and newer than Yelp start date
+	    
 		jsonReview = (JSONObject) o.clone();
 		type = (String) jsonReview.get(TYPE);
 		businessID = (String) jsonReview.get(BUSINESS_ID);

@@ -36,6 +36,7 @@ public class RestaurantDBClient{
 					output.println(fromUser);
 				}
 			}while(!fromUser.equals("exit"));
+			System.out.println("Exiting...");
 			socket.close();
 		}
 		catch(Exception e){

@@ -81,7 +81,7 @@ public class RestaurantDBServer {
 	private void handle(Socket socket) throws IOException {
 		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		PrintWriter output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
-		
+
 		String line;
 		output.println("Please enter a query:");
 		do{
@@ -101,8 +101,10 @@ public class RestaurantDBServer {
             } else {
 			
                 for (Restaurant restaurant : db.query(line)) {
-                    restaurants.append(restaurant.getJSON()); 
+                    restaurants.append(restaurant.getJSON());
+                    restaurants.append('\n');
                 }
+                restaurants.append("Please enter another query");
             }
 			output.println(restaurants);
 			output.flush();

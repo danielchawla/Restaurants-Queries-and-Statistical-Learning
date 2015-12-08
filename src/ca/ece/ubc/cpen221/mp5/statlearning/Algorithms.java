@@ -152,7 +152,7 @@ public class Algorithms {
 		Map<Double, Double> coordinates = new HashMap<>();
 		
 		for(Review review : reviews)
-			coordinates.put((double) review.getStars(), featureFunction.f( db.findRestaurant(review.getBusinessID()) , db));
+			coordinates.put(featureFunction.f( db.findRestaurant(review.getBusinessID()) , db), (double) review.getStars());
 		
 		return new Regression(coordinates, featureFunction);
 	}

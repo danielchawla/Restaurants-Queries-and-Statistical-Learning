@@ -69,6 +69,6 @@ public class Regression implements MP5Function{
 
 	@Override
 	public double f (Restaurant yelpRestaurant, RestaurantDB db){
-		return feature.f(yelpRestaurant, db);
+		return a * feature.f(yelpRestaurant, db) + b;
 	}	
 }

@@ -25,15 +25,9 @@ public class RestaurantDBClient{
 			String fromUser;
 	
 			do{
-				while(true){
-					fromServer = input.readLine();
-					if(fromServer != null)
-						System.out.println("Server: " + fromServer);
-					else
-						break;
-					System.out.println("looping");
-				}
-				System.out.println("Please enter another query");
+				fromServer = input.readLine();
+				if(fromServer != null)
+					System.out.println("Server: " + fromServer);
 				fromUser = stdIn.readLine();
 				if (fromUser != null) {
 					System.out.println("Client: " + fromUser);

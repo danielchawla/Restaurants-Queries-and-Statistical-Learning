@@ -88,7 +88,7 @@ public class RestaurantDBServer {
 		do{
 		    output.println("Please enter a query.");
 			line = input.readLine();
-			StringBuilder restaurants = new StringBuilder();
+			line = line.replace("\\","");
 			
 			if (line.contains(RANDOMREVIEW)){
 			    output.println(db.randomReview(line.substring(RANDOMREVIEW.length() + INDEX, line.length() - INDEX)));
@@ -101,12 +101,13 @@ public class RestaurantDBServer {
             } else if (line.contains(ADDREVIEW)) {
                 output.println(db.addReview(line.substring(ADDREVIEW.length() + INDEX, line.length() - INDEX)));
             } else {
-			
+                StringBuilder restaurants = new StringBuilder();
                 for (Restaurant restaurant : db.query(line)) {
                     restaurants.append(restaurant.getJSON()); 
                 }
+                output.println(restaurants);
             }
-			output.println(restaurants);
+
 			output.flush();
 		} while(line != null);
 		input.close();

@@ -78,11 +78,22 @@ public class Algorithms {
 		return clusters;
 	}
 	
+	/**
+	 * 
+	 * @param centroid
+	 * @param restaurant
+	 * @return
+	 */
 	private static double getDistanceTo (Location centroid, Location restaurant){
 		return Math.sqrt(Math.pow(centroid.getLat() - restaurant.getLat(), 2)
 				+ Math.pow(centroid.getLong() - restaurant.getLong(), 2));
 	}
 	
+	/**
+	 * 
+	 * @param inputs
+	 * @return
+	 */
 	private static double getAverage(Set<Double> inputs){
 		double sum = 0;
 		for(double num : inputs){
@@ -91,6 +102,12 @@ public class Algorithms {
 		return sum/inputs.size();
 	}
 	
+	/**
+	 * 
+	 * @param myLocation
+	 * @param centroids
+	 * @return
+	 */
 	private static Location getClosest(Location myLocation, List<Location> centroids){
 		Location closestLocation = null;
 		double distance = 0;
@@ -128,7 +145,14 @@ public class Algorithms {
 
 		return json_clusters.toJSONString();
 	}
-
+	
+	/**
+	 * 
+	 * @param u
+	 * @param db
+	 * @param featureFunction
+	 * @return
+	 */
 	public static MP5Function getPredictor(User u, RestaurantDB db, MP5Function featureFunction) {
 		Set<Review> reviews = db.getReviews(u.getUserID());
 		Map<Double, Double> coordinates = new HashMap<>();
@@ -138,7 +162,14 @@ public class Algorithms {
 		
 		return new Regression(coordinates, featureFunction);
 	}
-
+	
+	/**
+	 * 
+	 * @param u
+	 * @param db
+	 * @param featureFunctionList
+	 * @return
+	 */
 	public static MP5Function getBestPredictor(User u, RestaurantDB db, List<MP5Function> featureFunctionList) {
 		boolean firstFunction = true;
 		Regression bestPredictor = null;

@@ -5,6 +5,11 @@ import java.util.Map.Entry;
 import ca.ece.ubc.cpen221.mp5.Restaurant;
 import ca.ece.ubc.cpen221.mp5.RestaurantDB;
 
+/**
+ * 
+ * @author Ryan Cotsakis and Daniel Chawla
+ *
+ */
 public class Regression implements MP5Function{
 
 	private final double a;
@@ -19,6 +24,7 @@ public class Regression implements MP5Function{
 		double xbar = 0;
 		double ybar = 0;
 		int n = 0;
+		
 		for(Entry<Double, Double> coordinate : coordinates.entrySet()){
 			n++;
 			xbar+=coordinate.getKey();
@@ -37,14 +43,26 @@ public class Regression implements MP5Function{
 		this.feature = feature;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public double getA(){
 		return a;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public double getB(){
 		return b;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
 	public double getR2(){
 		return r2;
 	}

@@ -68,9 +68,8 @@ public class QueryParser {
     }
     
     /**
-     * 
-     * @author 
-     *
+     * QueryListener_QueryCreator
+     * Note: Some of this code is reused from Lab 9.
      */
     private static class QueryListener_QueryCreator extends QueryGrammerBaseListener {
         
@@ -163,11 +162,9 @@ public class QueryParser {
         }
         
         /**
-         * 
-         * @return
+         * @return threadsafe immutable set of restaurants
          */
         public Set<Restaurant> answer() {
-            
             restaurants.addAll(stack.get(0));
             return Collections.synchronizedSet(Collections.unmodifiableSet(restaurants));
         }
@@ -176,9 +173,8 @@ public class QueryParser {
 
     
 /**
- * 
- * @author 
- *
+ * QueryGrammerListener_PrintEverything
+ * Note: Most of this is reused code from Lab 9.
  */
 class QueryGrammerListener_PrintEverything extends QueryGrammerBaseListener {
     

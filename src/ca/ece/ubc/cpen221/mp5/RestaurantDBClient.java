@@ -3,8 +3,17 @@ package ca.ece.ubc.cpen221.mp5;
 import java.io.*;
 import java.net.*;
 
+/**
+ * RestaurantDBClient
+ * @author Ryan Cotsakis and Daniel Chawla
+ */
 public class RestaurantDBClient{
 
+    /**
+     * Client that uses RestaurantDBServer
+     * @param hostname
+     * @param port
+     */
 	public RestaurantDBClient(String hostname, int port) {
 		try{
 			Socket socket = new Socket(hostname, port);
@@ -34,7 +43,7 @@ public class RestaurantDBClient{
 		}
 		
 	}
-
+	
 	public static void main(String[] args) {
 		new RestaurantDBClient("localhost", 4444);
 	}

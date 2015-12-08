@@ -322,14 +322,18 @@ public class RestaurantDB {
                 break;
             case RATING:
                 for(Restaurant restaurant: restaurantDatabase){
-                    if( Math.round( (float)restaurant.getStars() ) == Math.round( (float)Double.parseDouble(toFind)) ){ 
+                    int rating = (int) restaurant.getStars();
+                    if (rating >= Character.getNumericValue(toFind.charAt(0)) 
+                            && rating <= Character.getNumericValue(toFind.charAt(3))) {
                         results.add(restaurant.clone());
                     }
                 }
                 break;
             case PRICE:
                 for(Restaurant restaurant: restaurantDatabase){
-                    if( Math.round( (float)restaurant.getPrice() ) == Math.round( (float)Double.parseDouble(toFind)) ) { 
+                    int price = (int) restaurant.getPrice();
+                    if (price >= Character.getNumericValue(toFind.charAt(0)) 
+                            && price <= Character.getNumericValue(toFind.charAt(3))) {
                         results.add(restaurant.clone());
                     }
                 }

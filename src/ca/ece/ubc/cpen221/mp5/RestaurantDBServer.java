@@ -13,7 +13,7 @@ public class RestaurantDBServer {
     private final RestaurantDB db;
 
 	/**
-	 * Constructor for server that will instatiante database and process queries concurrently.
+	 * Constructor for server that will instantiate database and process queries concurrently.
 	 * 
 	 * @param port
 	 * @param filename1

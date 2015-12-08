@@ -38,9 +38,9 @@ public class RestaurantDBServer {
 	    db = new RestaurantDB(restaurants, reviews, users);
 	    
 	    try{
-	    	System.out.println("Booting server.");
+	    	System.out.println("Booting server...");
 			socket = new ServerSocket(port);
-			System.out.println("Success booting server.");
+			System.out.println("Server is ready.");
 		}catch (IOException e){
 			e.printStackTrace();
 			return;
@@ -49,9 +49,9 @@ public class RestaurantDBServer {
 	    while(true){
 	    	Socket client;
     		try{
-    			System.out.println("Waiting for client");
+    			System.out.println("Waiting for client...");
 				client = socket.accept();
-				System.out.println("Found client");
+				System.out.println("Found client.");
 			
 		    	Thread handler = new Thread(new Runnable(){
 		

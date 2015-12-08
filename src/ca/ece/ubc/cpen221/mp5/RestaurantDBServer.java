@@ -80,12 +80,12 @@ public class RestaurantDBServer {
 		output.println("Please enter a query:");
 		do{
 			line = input.readLine();
-			String restaurants = "";
+			StringBuilder restaurants = new StringBuilder();
 			for(Restaurant restaurant : db.query(line)){
-				restaurants.concat("Name: " + restaurant.getName() + " // Location: (" + restaurant.getAddress()
-						+ " // Rating: " + restaurant.getStars());
+				restaurants.append(restaurant.getJSON()); // it looks like this only prints out one restaurant
 			}
 			output.println(restaurants);
+			output.flush();
 		} while(line != null);
 		input.close();
 		output.close();

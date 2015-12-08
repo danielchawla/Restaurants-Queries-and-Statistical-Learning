@@ -129,6 +129,14 @@ public class RestaurantDB {
 	}
 	
 	/**
+	 * Finds and returns a set of all users
+	 * 
+	 */
+	public Set<User> getUsers(){
+		return Collections.unmodifiableSet(this.userDatabase);
+	}
+	
+	/**
 	 * Finds a restaurant with given id.
 	 * @param business_id
 	 *            the ID of the restaurant that is to be returned

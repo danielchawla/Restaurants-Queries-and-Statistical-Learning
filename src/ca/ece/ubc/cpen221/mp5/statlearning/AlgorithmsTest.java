@@ -20,6 +20,23 @@ public class AlgorithmsTest{
 		
 		List<Set<Restaurant>> out3 = Algorithms.kMeansClustering(12, db);
 		assertEquals(out3.size(), 12);
+		
+		System.out.println(Algorithms.convertClustersToJSON(out));
+	}
+	
+	@Test
+	public void testRegression(){
+		db = new RestaurantDB("data/restaurants.json", "data/reviews.json", "data/users.json");
+		User w = null;
+		for(User u : db.getUsers()){
+			w = u;
+			break;
+		}
+		Regression functionPrice = (Regression) Algorithms.getPredictor(w, db, new Price());
+		Regression functionRating = (Regression) Algorithms.getPredictor(w, db, new Rating());
+		Regression functionLongitude = (Regression) Algorithms.getPredictor(w, db, new Longitude());
+		System.out.println(functionRating.getR2() + " " + functionPrice.getR2()+ " " + functionLongitude.getR2());
+		
 	}
 
 }

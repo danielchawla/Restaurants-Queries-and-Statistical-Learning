@@ -210,7 +210,7 @@ public class RestaurantDB {
      * @param restaurantDetails 
      *     String must be in JSON format. String must not be null.    
      */
-    public synchronized void addRestaurant(String restaurantDetails){
+    public synchronized String addRestaurant(String restaurantDetails){
         
         boolean alreadyExists = false;
         JSONParser parser = new JSONParser();
@@ -223,8 +223,11 @@ public class RestaurantDB {
             }
             
             if (alreadyExists == true) 
-                throw new IllegalArgumentException("Restaurant already exists.");
-            else restaurantDatabase.add(toAdd);
+                return "Restaurant already exists." ;
+            else {
+                restaurantDatabase.add(toAdd);
+                return "Restaurant added to database." ;
+            }
             
         } catch (ParseException e) { 
             e.printStackTrace();
@@ -237,7 +240,7 @@ public class RestaurantDB {
      * @param userDetails 
      *     String must be in JSON format. String must not be null.    
      */
-    public synchronized void addUser(String userDetails){
+    public synchronized String addUser(String userDetails){
         
         boolean alreadyExists = false;
         JSONParser parser = new JSONParser();
@@ -250,8 +253,11 @@ public class RestaurantDB {
             }
             
             if (alreadyExists == true) 
-                throw new IllegalArgumentException("Error. User with given ID already exists.");
-            else userDatabase.add(toAdd);
+                return "Error. User with given ID already exists.";
+            else {
+                userDatabase.add(toAdd);
+                return "User added to database." ;
+            }
             
         } catch (ParseException e) { 
             e.printStackTrace(); 
@@ -264,7 +270,7 @@ public class RestaurantDB {
      * @param reviewDetails 
      *     String must be in JSON format. String must not be null.    
      */
-    public synchronized void addReview(String reviewDetails){
+    public synchronized String addReview(String reviewDetails){
         
         boolean alreadyExists = false;
         JSONParser parser = new JSONParser();
@@ -277,8 +283,11 @@ public class RestaurantDB {
             }
             
             if (alreadyExists == true) 
-                throw new IllegalArgumentException("Error. Review already exists.");
-            else reviewDatabase.add(toAdd);
+                return "Error. Review already exists." ;
+            else {
+                reviewDatabase.add(toAdd);
+                return "Review added to database." ;
+            }
             
         } catch (ParseException e) { 
             e.printStackTrace(); 

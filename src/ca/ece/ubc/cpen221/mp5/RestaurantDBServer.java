@@ -17,6 +17,7 @@ public class RestaurantDBServer {
     private static final String ADDRESTAURANT = "addRestaurant";
     private static final String ADDUSER = "addUser";
     private static final String ADDREVIEW = "addReview";
+    private static final int INDEX = 2;
 
 	/**
 	 * Constructor for server that will instantiate database and process queries concurrently.
@@ -83,21 +84,22 @@ public class RestaurantDBServer {
 		PrintWriter output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 		
 		String line;
-		output.println("Please enter a query:");
+		
 		do{
+		    output.println("Please enter a query.");
 			line = input.readLine();
 			StringBuilder restaurants = new StringBuilder();
 			
 			if (line.contains(RANDOMREVIEW)){
-			    output.println(db.randomReview(line.substring(RANDOMREVIEW.length() + 2, line.length() - 2)));
+			    output.println(db.randomReview(line.substring(RANDOMREVIEW.length() + INDEX, line.length() - INDEX)));
 			} else if (line.contains(GETRESTAURANT)) {
-			    output.println(db.getRestaurant(line.substring(GETRESTAURANT.length() + 2, line.length() - 2)));
+			    output.println(db.getRestaurant(line.substring(GETRESTAURANT.length() + INDEX, line.length() - INDEX)));
 			} else if (line.contains(ADDRESTAURANT)) {
-			    output.println(db.getRestaurant(line.substring(ADDRESTAURANT.length() + 2, line.length() - 2)));
+			    output.println(db.addRestaurant(line.substring(ADDRESTAURANT.length() + INDEX, line.length() - INDEX)));
             } else if (line.contains(ADDUSER)) {
-                output.println(db.getRestaurant(line.substring(ADDUSER.length() + 2, line.length() - 2)));
+                output.println(db.addUser(line.substring(ADDUSER.length() + INDEX, line.length() - INDEX)));
             } else if (line.contains(ADDREVIEW)) {
-                output.println(db.getRestaurant(line.substring(ADDREVIEW.length() + 2, line.length() - 2)));
+                output.println(db.addReview(line.substring(ADDREVIEW.length() + INDEX, line.length() - INDEX)));
             } else {
 			
                 for (Restaurant restaurant : db.query(line)) {

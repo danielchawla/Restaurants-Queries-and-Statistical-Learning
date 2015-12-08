@@ -34,7 +34,7 @@ RANGE : [1-5]'..'[1-5];
 LPAREN : '(' ;
 RPAREN : ')' ;
 WHITESPACE : [ \t\r\n]+ -> skip ;
-STRING : '"'(LPAREN?([a-z]|[A-Z]|[0-9]|'&'|','|'\''|'-'|'.')+ WHITESPACE* RPAREN?)+ '"';
+STRING : '"'(LPAREN?([a-z]|[A-Z]|[0-9]|'&'|','|'\''|'-'|'.'|'\u00e9')+ WHITESPACE* RPAREN?)+ '"';
 
 /*
  * These are the parser rules. They define the structures used by the parser.

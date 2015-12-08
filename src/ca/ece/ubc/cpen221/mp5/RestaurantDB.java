@@ -36,12 +36,11 @@ public class RestaurantDB {
 
 	/**
 	 * Create a database from the Yelp dataset given the names of three files:
-	 * <ul>
-	 * <li>One that contains data about the restaurants;</li>
-	 * <li>One that contains reviews of the restaurants;</li>
-	 * <li>One that contains information about the users that submitted reviews.
-	 * </li>
-	 * </ul>
+	 * 
+	 * - One that contains data about the restaurants.
+	 * - One that contains reviews of the restaurants.
+	 * - One that contains information about the users that submitted reviews.
+     *
 	 * The files contain data in JSON format.
 	 * 
 	 * @param restaurantJSONfilename
@@ -52,11 +51,20 @@ public class RestaurantDB {
 	 *            the filename for the users
 	 */
 	public RestaurantDB(String restaurantJSONfilename, String reviewsJSONfilename, String usersJSONfilename) {
+	    //
+	    // Abstraction function: Represents subset of entire Yelp database. Contains restaurants that
+	    //         have signed up to be on Yelp, reviews of restaurants, and users - those who have a
+	    //         Yelp account.
+	    //
+	    // Rep invariant: 
+	    //         - JSON files are properly formatted 
+	    //         - data in JSON files is accurate and valid
+	    //         - each file represents corresponding class and all fields are valid and not null
 	    
 	    try {
-	        
 	        JSONParser parser = new JSONParser();
             String currentLine;
+            
             
             // reads from restaurant file
 	        FileReader restaurantFileReader = new FileReader(restaurantJSONfilename);
@@ -72,6 +80,7 @@ public class RestaurantDB {
 	        restaurantBufferedReader.close();
 	        restaurantFileReader.close();
 	        
+	        
 	        // reads from review file
 	        FileReader reviewFileReader = new FileReader(reviewsJSONfilename);
             BufferedReader reviewBufferedReader = new BufferedReader(reviewFileReader);
@@ -86,6 +95,7 @@ public class RestaurantDB {
             reviewBufferedReader.close();
             reviewFileReader.close();
 
+            
             // reads from user file
             FileReader userFileReader = new FileReader(usersJSONfilename);
             BufferedReader userBufferedReader = new BufferedReader(userFileReader);
@@ -105,6 +115,7 @@ public class RestaurantDB {
             throw new IllegalArgumentException("File couldn't be found.");
         } catch (ParseException e) {
             e.printStackTrace();
+            throw new IllegalArgumentException("Error parsing. Check for syntax error.");
         } catch (IOException e) {
             e.printStackTrace();
         } 
@@ -132,7 +143,6 @@ public class RestaurantDB {
 		throw new IllegalArgumentException("Restaurant not found.");
 	}
 
-	
 	/**
 	 * Outputs random review of a restaurant that matches restaurantName. If more than one name matches
 	 * restaurantName, returns random review from first restaurant.
@@ -159,7 +169,9 @@ public class RestaurantDB {
 	            reviews.add(review);
 	        }
 	    }
-	    int index = Math.round( (float) (Math.random() * reviews.size())); // finds random index
+	    
+	    // finds random index and returns object at that index
+	    int index = Math.round( (float) (Math.random() * reviews.size())); 
 	    return reviews.get(index).getJSON();
 	}
 	 
@@ -170,7 +182,6 @@ public class RestaurantDB {
 	 * @return String with restaurant details in JSON format
 	 */
 	public String getRestaurant(String businessID){
-	    
         for (Restaurant restaurant : restaurantDatabase) {
             if (restaurant.getBusinessID().equals(businessID)) {
                 return restaurant.getJSON();
@@ -185,7 +196,6 @@ public class RestaurantDB {
      * @return set of reviews
      */
     public Set<Review> getReviews(String userID){
-        
         Set<Review> reviews = new HashSet<Review>();
         
         for (Review review : reviewDatabase) {
@@ -199,7 +209,7 @@ public class RestaurantDB {
     /**
      * Checks if restaurant exists and if not, adds new restaurant to restaurantDatabase. 
      * @param restaurantDetails 
-     *     rep invariant: String must be JSON format. String must not be null.    
+     *     String must be in JSON format. String must not be null.    
      */
     public synchronized void addRestaurant(String restaurantDetails){
         
@@ -207,24 +217,26 @@ public class RestaurantDB {
         JSONParser parser = new JSONParser();
         
         try {
-            Restaurant toAdd;
-            toAdd = new Restaurant((JSONObject) parser.parse((restaurantDetails)));
-            
+            // Checks if restaurant already exists
+            Restaurant toAdd = new Restaurant((JSONObject) parser.parse((restaurantDetails)));
             for (Restaurant restaurant : restaurantDatabase) {    
-                if ( restaurant.equals(toAdd) ) {
-                        alreadyExists = true; 
-                }
+                if ( restaurant.equals(toAdd) ) alreadyExists = true; 
             }
             
-            if (alreadyExists == true) throw new IllegalArgumentException("Restaurant already exists.");
+            if (alreadyExists == true) 
+                throw new IllegalArgumentException("Restaurant already exists.");
             else restaurantDatabase.add(toAdd);
-        } catch (ParseException e) { e.printStackTrace(); }
+            
+        } catch (ParseException e) { 
+            e.printStackTrace();
+            throw new IllegalArgumentException("Error parsing. Check syntax.");
+        }
     }
     
     /**
      * Checks if user exists and if not, adds new user to userDatabase. 
      * @param userDetails 
-     *     rep invariant: String must be JSON format. String must not be null.    
+     *     String must be in JSON format. String must not be null.    
      */
     public synchronized void addUser(String userDetails){
         
@@ -232,25 +244,26 @@ public class RestaurantDB {
         JSONParser parser = new JSONParser();
         
         try {
-            User toAdd;
-            toAdd = new User((JSONObject) parser.parse((userDetails)));
-            
+            // Checks if user already exists
+            User toAdd = new User((JSONObject) parser.parse((userDetails)));
             for (User user : userDatabase) {    
-                if ( user.equals(toAdd) ) {
-                        alreadyExists = true; 
-                }
+                if ( user.equals(toAdd) ) alreadyExists = true; 
             }
             
             if (alreadyExists == true) 
                 throw new IllegalArgumentException("Error. User with given ID already exists.");
             else userDatabase.add(toAdd);
-        } catch (ParseException e) { e.printStackTrace(); }
+            
+        } catch (ParseException e) { 
+            e.printStackTrace(); 
+            throw new IllegalArgumentException("Error parsing. Check syntax.");
+        }
     }
     
     /**
      * Checks if review exists and if not, adds new review to userDatabase. 
      * @param reviewDetails 
-     *     rep invariant: String must be JSON format. String must not be null.    
+     *     String must be in JSON format. String must not be null.    
      */
     public synchronized void addReview(String reviewDetails){
         
@@ -258,25 +271,26 @@ public class RestaurantDB {
         JSONParser parser = new JSONParser();
         
         try {
-            Review toAdd;
-            toAdd = new Review((JSONObject) parser.parse((reviewDetails)));
-            
+            // Checks if review already exists
+            Review toAdd = new Review((JSONObject) parser.parse((reviewDetails)));
             for (Review review : reviewDatabase) {    
-                if ( review.equals(toAdd) ) {
-                        alreadyExists = true; 
-                }
+                if ( review.equals(toAdd) ) alreadyExists = true; 
             }
             
             if (alreadyExists == true) 
                 throw new IllegalArgumentException("Error. Review already exists.");
             else reviewDatabase.add(toAdd);
-        } catch (ParseException e) { e.printStackTrace(); } 
+            
+        } catch (ParseException e) { 
+            e.printStackTrace(); 
+            throw new IllegalArgumentException("Error parsing. Check syntax.");
+        }
     }
     
     /**
-     * 
-     * @param queryString
-     * @return
+     * Submits query to parser for processing.
+     * @param queryString - must in valid format
+     * @return set of restaurants
      */
     public Set<Restaurant> query(String queryString) {
         
@@ -285,10 +299,10 @@ public class RestaurantDB {
     }
     
     /**
-     * 
-     * @param request
+     * Processes the answer to a parsed query.
+     * @param requestType 
      * @param toFind
-     * @return
+     * @return set of restaurants that answer query.
      */
     public Set<Restaurant> answerQuery(String requestType, String toFind) {
         

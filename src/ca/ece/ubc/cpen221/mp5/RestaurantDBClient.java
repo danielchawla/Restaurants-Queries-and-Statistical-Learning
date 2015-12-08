@@ -45,6 +45,6 @@ public class RestaurantDBClient{
 	}
 	
 	public static void main(String[] args) {
-		new RestaurantDBClient("localhost", 4444);
+		new RestaurantDBClient("localhost", Main.PORT);
 	}
 }

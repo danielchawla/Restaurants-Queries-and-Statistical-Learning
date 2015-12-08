@@ -47,7 +47,7 @@ public class RestaurantDBServer {
 				client = socket.accept();
 				System.out.println("Found client");
 			
-		    	new Thread(new Runnable(){
+		    	Thread handler = new Thread(new Runnable(){
 		
 					@Override
 					public void run ( ){
@@ -60,7 +60,7 @@ public class RestaurantDBServer {
 					}
 					
 		    	});
-		    	
+		    	handler.start();
     		}catch (IOException e){
 				e.printStackTrace();
 			}
@@ -77,6 +77,7 @@ public class RestaurantDBServer {
 		PrintWriter output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
 		
 		String line;
+		output.println("Please enter a query:");
 		do{
 			line = input.readLine();
 			String restaurants = "";

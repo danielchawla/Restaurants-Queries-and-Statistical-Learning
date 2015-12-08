@@ -11,6 +11,12 @@ public class RestaurantDBServer {
     
     private ServerSocket socket;
     private final RestaurantDB db;
+    
+    private static final String RANDOMREVIEW = "randomReview";
+    private static final String GETRESTAURANT = "getRestaurant";
+    private static final String ADDRESTAURANT = "addRestaurant";
+    private static final String ADDUSER = "addUser";
+    private static final String ADDREVIEW = "addReview";
 
 	/**
 	 * Constructor for server that will instantiate database and process queries concurrently.
@@ -81,9 +87,23 @@ public class RestaurantDBServer {
 		do{
 			line = input.readLine();
 			StringBuilder restaurants = new StringBuilder();
-			for(Restaurant restaurant : db.query(line)){
-				restaurants.append(restaurant.getJSON()); // it looks like this only prints out one restaurant
-			}
+			
+			if (line.contains(RANDOMREVIEW)){
+			    output.println(db.randomReview(line.substring(RANDOMREVIEW.length() + 2, line.length() - 2)));
+			} else if (line.contains(GETRESTAURANT)) {
+			    output.println(db.getRestaurant(line.substring(GETRESTAURANT.length() + 2, line.length() - 2)));
+			} else if (line.contains(ADDRESTAURANT)) {
+			    output.println(db.getRestaurant(line.substring(ADDRESTAURANT.length() + 2, line.length() - 2)));
+            } else if (line.contains(ADDUSER)) {
+                output.println(db.getRestaurant(line.substring(ADDUSER.length() + 2, line.length() - 2)));
+            } else if (line.contains(ADDREVIEW)) {
+                output.println(db.getRestaurant(line.substring(ADDREVIEW.length() + 2, line.length() - 2)));
+            } else {
+			
+                for (Restaurant restaurant : db.query(line)) {
+                    restaurants.append(restaurant.getJSON()); 
+                }
+            }
 			output.println(restaurants);
 			output.flush();
 		} while(line != null);

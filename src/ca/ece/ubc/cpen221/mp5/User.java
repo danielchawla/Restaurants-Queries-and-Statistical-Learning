@@ -3,6 +3,10 @@ package ca.ece.ubc.cpen221.mp5;
 import java.util.*;
 import org.json.simple.JSONObject;
 
+/**
+ * A yelp user.
+ * @author Ryan Cotsakis and Daniel Chawla
+ */
 public class User {
 	
 	final static String URL = "url";

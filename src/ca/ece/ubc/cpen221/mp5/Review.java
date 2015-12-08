@@ -3,6 +3,10 @@ package ca.ece.ubc.cpen221.mp5;
 import java.util.*;
 import org.json.simple.JSONObject;
 
+/**
+ * A yelp review.
+ * @author Ryan Cotsakis and Daniel Chawla.
+ */
 public class Review {
 	final static String TYPE = "type";
 	final static String BUSINESS_ID = "business_id";

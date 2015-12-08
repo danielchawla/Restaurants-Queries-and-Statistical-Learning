@@ -3,16 +3,17 @@ package ca.ece.ubc.cpen221.mp5;
 import java.io.*;
 import java.net.*;
 
-// TODO: Implement a server that will instantiate a database, 
-// process queries concurrently, etc.
-
+/**
+ * Server for RestaurantDB. 
+ * @author Ryan Cotsakis and Daniel Chawla
+ */
 public class RestaurantDBServer {
     
     private ServerSocket socket;
     private final RestaurantDB db;
 
 	/**
-	 * Constructor
+	 * Constructor for server that will instatiante database and process queries concurrently.
 	 * 
 	 * @param port
 	 * @param filename1
@@ -20,6 +21,14 @@ public class RestaurantDBServer {
 	 * @param filename3
 	 */
 	public RestaurantDBServer(int port, String restaurants, String reviews, String users) {
+	    //
+	    // Abstraction function: represents server to that connects to restaurantDB.
+	    // 
+	    // Rep invariant: 
+	    //         - No fields are null
+	    //         - Strings represent valid files.
+	    //         - Files are properly formatted for RestaurantDB.
+	    
 	    db = new RestaurantDB(restaurants, reviews, users);
 	    
 	    try{
@@ -58,6 +67,11 @@ public class RestaurantDBServer {
 	    }
 	}
 	
+	/**
+	 * 
+	 * @param socket
+	 * @throws IOException
+	 */
 	private void handle(Socket socket) throws IOException {
 		BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 		PrintWriter output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);

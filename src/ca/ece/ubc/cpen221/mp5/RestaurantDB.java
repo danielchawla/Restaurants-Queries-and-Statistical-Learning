@@ -17,10 +17,10 @@ import org.json.simple.parser.ParseException;
 
 import ca.ece.ubc.cpen221.mp5.queries.QueryParser;
 
-// TODO: This class represents the Restaurant Database.
-// Define the internal representation and 
-// state the rep invariant and the abstraction function.
-
+/**
+ * Database for yelp restaurant, user, and review data.
+ * @author Ryan Cotsakis and Daniel Chawla
+ */
 public class RestaurantDB {
     
     private final Set<Restaurant> restaurantDatabase = new HashSet<Restaurant>();
@@ -33,7 +33,6 @@ public class RestaurantDB {
     private static final String PRICE = "price";
     private static final String IN = "in";
     
-
 	/**
 	 * Create a database from the Yelp dataset given the names of three files:
 	 * 

@@ -128,17 +128,11 @@ public class Algorithms {
 
 	@SuppressWarnings("unchecked")
 	public static String convertClustersToJSON(List<Set<Restaurant>> clusters) {
-		JSONArray json_clusters = new JSONArray(); 
-		int clusterNumber = 0;
+		JSONArray json_clusters = new JSONArray();
 		for (Set<Restaurant> set : clusters) {
-			JSONObject json_cluster = new JSONObject();
+			JSONArray json_cluster = new JSONArray();
 			for (Restaurant rest : set) {
-				json_cluster.put("latitude", rest.getLocation().getLat());
-				json_cluster.put("longitude", rest.getLocation().getLong());
-				json_cluster.put("name", rest.getName());
-				json_cluster.put("cluster", clusterNumber);
-				clusterNumber++;
-				json_cluster.put("weight", 1);
+				json_cluster.add(rest.getJSON());
 			}
 			json_clusters.add(json_cluster);
 		}

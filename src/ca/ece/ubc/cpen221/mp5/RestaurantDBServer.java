@@ -104,7 +104,7 @@ public class RestaurantDBServer {
                 StringBuilder restaurants = new StringBuilder();
                 for (Restaurant restaurant : db.query(line)) {
                     restaurants.append(restaurant.getJSON());
-                    restaurants.append('\n');
+                    //restaurants.append('\n');
                 }
                 restaurants.append("Please enter another query");
             }

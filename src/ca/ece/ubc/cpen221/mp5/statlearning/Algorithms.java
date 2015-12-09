@@ -13,7 +13,8 @@ public class Algorithms {
 	 * database.
 	 * 
 	 * @param db must contain at least k restaurants
-	 * @return
+	 * @param k the number of clusters
+	 * @return list of set of restaurants where each set is a whole cluster of restaurants
 	 */
 	public static List<Set<Restaurant>> kMeansClustering(int k, RestaurantDB db) {
 		Set<Restaurant> restaurants = new HashSet<Restaurant>();
@@ -79,10 +80,10 @@ public class Algorithms {
 	}
 	
 	/**
-	 * 
-	 * @param centroid
-	 * @param restaurant
-	 * @return
+	 * finds euclidian distance between two locations
+	 * @param centroid first location
+	 * @param restaurant second location
+	 * @return magnitude of straight line distance
 	 */
 	private static double getDistanceTo (Location centroid, Location restaurant){
 		return Math.sqrt(Math.pow(centroid.getLat() - restaurant.getLat(), 2)
@@ -91,8 +92,8 @@ public class Algorithms {
 	
 	/**
 	 * 
-	 * @param inputs
-	 * @return
+	 * @param inputs any doubles
+	 * @return average of inputs (mean)
 	 */
 	private static double getAverage(Set<Double> inputs){
 		double sum = 0;
@@ -103,10 +104,11 @@ public class Algorithms {
 	}
 	
 	/**
+	 * finds the closest centroid to a given location
 	 * 
-	 * @param myLocation
-	 * @param centroids
-	 * @return
+	 * @param myLocation location of restaurant
+	 * @param centroids the set of all centroids
+	 * @return closest centroid to myLocation
 	 */
 	private static Location getClosest(Location myLocation, List<Location> centroids){
 		Location closestLocation = null;
@@ -126,6 +128,13 @@ public class Algorithms {
 		return closestLocation;
 	}
 
+	/**
+	 * Converts a List of clusters, each cluster is a set of
+	 * restaurants. converts to JSON formatted string representation of the list.
+	 * 
+	 * @param clusters all clusters
+	 * @return the JSON formatted string representation of the list
+	 */
 	@SuppressWarnings("unchecked")
 	public static String convertClustersToJSON(List<Set<Restaurant>> clusters) {
 		JSONArray json_clusters = new JSONArray();
@@ -141,11 +150,14 @@ public class Algorithms {
 	}
 	
 	/**
+	 * Produces a predictor function that predicts a given user's rating of any restaurant in
+	 * a given RestaurantDB, based on a certain aspect of all the restaurants.
+	 *  The predictor function is linear with respect to the given feature function.
 	 * 
-	 * @param u
-	 * @param db
-	 * @param featureFunction
-	 * @return
+	 * @param u the given user
+	 * @param db the given restaurant database
+	 * @param featureFunction an MP5Function that returns a specific feature of the restaurants in the database
+	 * @return an MP5Function that predicts the given user's next review
 	 */
 	public static MP5Function getPredictor(User u, RestaurantDB db, MP5Function featureFunction) {
 		Set<Review> reviews = db.getReviews(u.getUserID());
@@ -158,11 +170,15 @@ public class Algorithms {
 	}
 	
 	/**
+	 * Finds the best Regression that best predicts a given users next review based on their previous reviews.
 	 * 
 	 * @param u
+	 *            the user
 	 * @param db
+	 *            the restaurant database
 	 * @param featureFunctionList
-	 * @return
+	 *            the list of MP5Functions
+	 * @return the best MP5Function that best predicts the user's ratings.
 	 */
 	public static MP5Function getBestPredictor(User u, RestaurantDB db, List<MP5Function> featureFunctionList) {
 		boolean firstFunction = true;

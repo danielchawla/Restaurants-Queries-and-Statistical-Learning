@@ -5,11 +5,6 @@ import java.util.Map.Entry;
 import ca.ece.ubc.cpen221.mp5.Restaurant;
 import ca.ece.ubc.cpen221.mp5.RestaurantDB;
 
-/**
- * 
- * @author Ryan Cotsakis and Daniel Chawla
- *
- */
 public class Regression implements MP5Function{
 
 	private final double a;
@@ -17,6 +12,12 @@ public class Regression implements MP5Function{
 	private final double r2;
 	private final MP5Function feature;
 	
+	/**
+	 * construct a linear regression predictor that predicts a user's future ratings based on a feature of all restaurants.
+	 * 
+	 * @param coordinates the xy coordinates, where x is the restaurant feature and y is the user's rating.
+	 * @param feature the aspect of the restauraunt on which the predictions are based
+	 */
 	public Regression(Map<Double, Double> coordinates, MP5Function feature){
 		double sxy = 0;
 		double sxx = 0;
@@ -30,22 +31,30 @@ public class Regression implements MP5Function{
 			xbar+=coordinate.getKey();
 			ybar+=coordinate.getValue();
 		}
-		xbar/=n;
-		ybar/=n;
-		for(Entry<Double, Double> coordinate : coordinates.entrySet()){
-			sxx+=Math.pow(coordinate.getKey() - xbar, 2.0);
-			syy+=Math.pow(coordinate.getValue() - ybar, 2.0);
-			sxy+=(coordinate.getKey() - xbar)*(coordinate.getValue() - ybar);
+		if(n==1){
+			a = 0;
+			b = ybar;
+			r2 = 1;
+			
 		}
-		b = sxy/sxx;
-		a = ybar - b * xbar;
-		r2 = sxy*sxy/sxx/syy;
+		else{
+			xbar/=n;
+			ybar/=n;
+			for(Entry<Double, Double> coordinate : coordinates.entrySet()){
+				sxx+=Math.pow(coordinate.getKey() - xbar, 2.0);
+				syy+=Math.pow(coordinate.getValue() - ybar, 2.0);
+				sxy+=(coordinate.getKey() - xbar)*(coordinate.getValue() - ybar);
+			}
+			b = sxy/sxx;
+			a = ybar - b * xbar;
+			r2 = sxy*sxy/sxx/syy;
+		}
 		this.feature = feature;
 	}
 	
 	/**
 	 * 
-	 * @return
+	 * @return get slope of the line
 	 */
 	public double getA(){
 		return a;
@@ -53,7 +62,7 @@ public class Regression implements MP5Function{
 	
 	/**
 	 * 
-	 * @return
+	 * @return get y intercept of the line
 	 */
 	public double getB(){
 		return b;
@@ -61,7 +70,7 @@ public class Regression implements MP5Function{
 	
 	/**
 	 * 
-	 * @return
+	 * @return get the R^2 value for this prediction
 	 */
 	public double getR2(){
 		return r2;
@@ -69,6 +78,10 @@ public class Regression implements MP5Function{
 
 	@Override
 	public double f (Restaurant yelpRestaurant, RestaurantDB db){
-		return a * feature.f(yelpRestaurant, db) + b;
+		double result = a * feature.f(yelpRestaurant, db) + b;
+		if (result >= 0.0 && result <= 5.0) return result;
+		else if (result > 5.0) return 5.0;
+		else return 0.0;
+				
 	}	
 }

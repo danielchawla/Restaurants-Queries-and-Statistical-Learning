@@ -23,7 +23,7 @@ public class AlgorithmsTest{
 		}
 				
 		Regression predictor = (Regression) Algorithms.getPredictor(z, db, new Price());
-		System.out.println("R^2: "+predictor.f(yelpRestaurant, db));
+		System.out.println("f: "+predictor.f(yelpRestaurant, db));
 	}
 	
 	@Test
